@@ -144,17 +144,18 @@ export const AuthProvider = (props) => {
     redirect: 'follow'
   };
 
-  let user = {};
+  let data = {};
 
   fetch("http://localhost:8000/bh/auth/login", requestOptions)
   .then(response => response.text())
-  .then(result => user = result)
+  .then(result => data = result)
   .catch(error => console.log('error', error));
 
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
+  dispatch({
+    type: HANDLERS.SIGN_IN,
+    payload: data.user
+  });
+    
   };
 
   const signUp = async (email, name, password) => {

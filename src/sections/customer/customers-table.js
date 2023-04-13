@@ -31,6 +31,7 @@ export const CustomersTable = (props) => {
     rowsPerPage = 0,
     selected = []
   } = props;
+  console.log("🚀 ~ file: customers-table.js:24 ~ CustomersTable ~ items:", items)
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
@@ -68,14 +69,13 @@ export const CustomersTable = (props) => {
                   Phone
                 </TableCell>
                 <TableCell>
-                  Signed Up
+                  Created At
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+                const isSelected = selected.includes(customer._id);
 
                 return (
                   <TableRow
@@ -105,7 +105,7 @@ export const CustomersTable = (props) => {
                           {getInitials(customer.name)}
                         </Avatar>
                         <Typography variant="subtitle2">
-                          {customer.name}
+                          {customer?.name || customer?.username}
                         </Typography>
                       </Stack>
                     </TableCell>
@@ -113,13 +113,13 @@ export const CustomersTable = (props) => {
                       {customer.email}
                     </TableCell>
                     <TableCell>
-                      {customer.address.city}, {customer.address.state}, {customer.address.country}
+                      {customer?.address?.city}, {customer?.address?.district}, {customer?.address?.ward}, {customer?.address?.street}
                     </TableCell>
                     <TableCell>
-                      {customer.phone}
+                      {customer?.phone}
                     </TableCell>
                     <TableCell>
-                      {createdAt}
+                      {customer?.createdAt}
                     </TableCell>
                   </TableRow>
                 );
