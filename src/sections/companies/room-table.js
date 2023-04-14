@@ -17,7 +17,7 @@ import {
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 
-export const CustomersTable = (props) => {
+export const RoomTable = (props) => {
   const {
     count = 0,
     items = [],
@@ -31,7 +31,6 @@ export const CustomersTable = (props) => {
     rowsPerPage = 0,
     selected = []
   } = props;
-  console.log("🚀 ~ file: customers-table.js:24 ~ CustomersTable ~ items:", items)
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
@@ -60,13 +59,28 @@ export const CustomersTable = (props) => {
                   Name
                 </TableCell>
                 <TableCell>
-                  Email
+                  Description
+                </TableCell>
+                <TableCell>
+                  Acreage
                 </TableCell>
                 <TableCell>
                   Location
                 </TableCell>
                 <TableCell>
-                  Phone
+                  Period
+                </TableCell>
+                <TableCell>
+                  TypeRoom
+                </TableCell>
+                <TableCell>
+                  Deposit
+                </TableCell>
+                <TableCell>
+                 LstTransaction
+                </TableCell>
+                <TableCell>
+                 Status
                 </TableCell>
                 <TableCell>
                   Created At
@@ -74,13 +88,13 @@ export const CustomersTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer._id);
+              {items.map((room) => {
+                const isSelected = selected.includes(room._id);
 
                 return (
                   <TableRow
                     hover
-                    key={customer._id}
+                    key={room._id}
                     selected={isSelected}
                   >
                     <TableCell padding="checkbox">
@@ -88,9 +102,9 @@ export const CustomersTable = (props) => {
                         checked={isSelected}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            onSelectOne?.(customer._id);
+                            onSelectOne?.(room._id);
                           } else {
-                            onDeselectOne?.(customer._id);
+                            onDeselectOne?.(room._id);
                           }
                         }}
                       />
@@ -101,25 +115,40 @@ export const CustomersTable = (props) => {
                         direction="row"
                         spacing={2}
                       >
-                        <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
+                        <Avatar src={room?.roomAttachment?.url[0]}>
+                          {getInitials(room.name)}
                         </Avatar>
                         <Typography variant="subtitle2">
-                          {customer?.name || customer?.username}
+                          {room?.name}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.email}
+                      {room.description}
                     </TableCell>
                     <TableCell>
-                      {customer?.address?.city}, {customer?.address?.district}, {customer?.address?.ward}, {customer?.address?.street}
+                      {room.acreage}
                     </TableCell>
                     <TableCell>
-                      {customer?.phone}
+                      {room?.address?.fullText}
                     </TableCell>
                     <TableCell>
-                      {customer?.createdAt}
+                      {room.period}
+                    </TableCell>
+                    <TableCell>
+                      {room.typeRoom}
+                    </TableCell>
+                    <TableCell>
+                      {room.deposit}
+                    </TableCell>
+                    <TableCell>
+                      {room.lstTransaction}
+                    </TableCell>
+                    <TableCell>
+                      {room.status}
+                    </TableCell>
+                    <TableCell>
+                      {room.createdAt}
                     </TableCell>
                   </TableRow>
                 );
@@ -141,7 +170,7 @@ export const CustomersTable = (props) => {
   );
 };
 
-CustomersTable.propTypes = {
+RoomTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,
