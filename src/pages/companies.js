@@ -14,12 +14,11 @@ import {
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CompanyCard } from 'src/sections/companies/company-card';
 import { CompaniesSearch } from 'src/sections/companies/companies-search';
 import { applyPagination } from 'src/utils/apply-pagination';
-import useApiWithPagination from 'src/hooks/user/user-table';
 import { useSelection } from 'src/hooks/use-selection';
 import { RoomTable } from 'src/sections/companies/room-table';
+import roomWithPagination from 'src/hooks/room';
 const now = new Date();
 
 const useRooms = (page, rowsPerPage) => {
@@ -39,13 +38,13 @@ const useRoomIds = (rooms) => {
     [rooms]
   );
 };
+
 const Page = () => {
-  const { data, currentPage, totalPages, loading, error, handlePageChange } = useApiWithPagination('http://localhost:8000/admin/rooms')
+  const { data, currentPage, totalPages, loading, error} = roomWithPagination('http://localhost:8000/admin/rooms')
   
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const rooms = data || [];
-  
+  let rooms = data || [];
   const roomIds = useRoomIds(rooms);
   const customersSelection = useSelection(roomIds);
  
@@ -56,6 +55,12 @@ const Page = () => {
     []
   );
 
+  const handlePageChange = useCallback(
+    (event, value) => {
+      setPage(value);
+    },
+    []
+  );
   return (
     <>
       <Head>

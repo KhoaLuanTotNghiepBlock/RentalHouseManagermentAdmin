@@ -18,7 +18,7 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 
 export const RoomTable = (props) => {
-  const {
+  let {
     count = 0,
     items = [],
     onDeselectAll,
@@ -35,6 +35,8 @@ export const RoomTable = (props) => {
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
 
+  // items= items.map(item=>{return item.room} )
+  console.log("🚀 ~ file: room-table.js:24 ~ RoomTable ~ items:", items)
   return (
     <Card>
       <Scrollbar>
